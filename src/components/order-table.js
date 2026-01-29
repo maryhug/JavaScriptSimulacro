@@ -1,9 +1,11 @@
-
 <!-- ===================================
      COMPONENTE: Order Table
      Tabla de órdenes recientes
      =================================== -->
-<div class="order-table-container">
+
+export function orderTable() {
+    return `
+    <div class="order-table-container">
     <div class="table-header">
         <h2 class="table-title">Recent Orders</h2>
         <div class="table-actions">
@@ -92,3 +94,5 @@
         </button>
     </div>
 </div>
+    `
+}

@@ -1,11 +1,14 @@
-
-
-<!-- ===================================
+/*
+===================================
      COMPONENTE: Navbar
      Barra de navegación principal
-     =================================== -->
+===================================
+*/
 
-<nav class="navbar">
+export function navbar(){
+    return `
+    
+    <nav class="navbar">
     <div class="navbar-container">
         <!-- Logo y nombre de la app -->
         <div class="navbar-brand">
@@ -35,3 +38,6 @@
         </div>
     </div>
 </nav>
+    
+    `
+}

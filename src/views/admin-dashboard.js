@@ -1,40 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RestorApp Admin - Dashboard</title>
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="../components/navbar.html">
-    <link rel="stylesheet" href="../components/stats-card.html">
-    <link rel="stylesheet" href="../components/order-table.html">
-    <link rel="stylesheet" href="../components/order-details.html">
-</head>
-<body>
-<!-- ===================================
+/* ===================================
      VISTA: Dashboard Admin
      Panel de administración principal
-     =================================== -->
+=================================== */
 
+import {navbar} from "../components/navbar";
+
+export function adminDashboard() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+    
 <!-- Navbar -->
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <div class="navbar-logo">🍔</div>
-            <span class="navbar-title">RestorApp Admin</span>
-        </div>
-        <div class="navbar-menu">
-            <a href="#dashboard" class="navbar-link active">Dashboard</a>
-            <a href="#menu" class="navbar-link">Menu</a>
-            <a href="#users" class="navbar-link">Users</a>
-        </div>
-        <div class="navbar-actions">
-            <button class="navbar-user">
-                <img src="https://via.placeholder.com/40" alt="Admin" class="user-avatar">
-            </button>
-        </div>
-    </div>
-</nav>
+${navbar()}
 
 <!-- Main Content -->
 <main class="dashboard-main">
@@ -237,41 +213,5 @@
         </div>
     </div>
 </main>
-
-<style>
-    /* Estilos específicos para la vista Dashboard */
-    .dashboard-main {
-        padding: var(--spacing-xl) 0;
-    }
-
-    .dashboard-container {
-        max-width: 1440px;
-        margin: 0 auto;
-        padding: 0 var(--spacing-lg);
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-lg);
-        margin-bottom: var(--spacing-xl);
-    }
-
-    .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 400px;
-        gap: var(--spacing-lg);
-    }
-
-    @media (max-width: 1024px) {
-        .content-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
-</body>
-</html>
+    `
+}
