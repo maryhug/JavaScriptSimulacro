@@ -3,11 +3,10 @@
      Panel de administración principal
 =================================== */
 
-import {navbar} from "../components/navbar";
+import {navbar} from "../components/navbar.js";
 
 export function adminDashboard() {
-    const app = document.getElementById('app');
-    app.innerHTML = `
+    return `
     
 <!-- Navbar -->
 ${navbar()}

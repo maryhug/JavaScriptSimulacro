@@ -7,13 +7,10 @@
 
 export function menu() {
 
-    const app = document.getElementById('app');
-    app.innerHTML = `
-    
+return`
     
     <!-- Navbar -->
 
-<!--
 <nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-brand">
@@ -32,7 +29,6 @@ export function menu() {
         </div>
     </div>
 </nav>
--->
 
 
 

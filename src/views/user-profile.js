@@ -1,12 +1,10 @@
-<!-- ===================================
+/* ===================================
      VISTA: User Profile
      Página de perfil de usuario
-     =================================== -->
-
+     =================================== */
 
 export function userProfile() {
-    const app = document.getElementById('app');
-    app.innerHTML = `
+    return `
     
 <!-- Navbar simplificado -->
 <nav class="navbar">
@@ -26,7 +24,7 @@ export function userProfile() {
         <!-- Sidebar -->
         <aside class="profile-sidebar">
             <h2 class="sidebar-title">Recent Orders</h2>
-            <a href="#orders" class="view-all-link">View All</a>
+            <a href="#menu" class="view-all-link">View All</a>
 
             <div class="order-list">
                 <div class="order-card">

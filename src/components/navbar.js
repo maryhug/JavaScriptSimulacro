@@ -26,7 +26,7 @@ export function navbar(){
         <div class="navbar-menu">
             <a href="#dashboard" class="navbar-link active">Dashboard</a>
             <a href="#menu" class="navbar-link">Menu</a>
-            <a href="#users" class="navbar-link">Users</a>
+            <a href="#profile" class="navbar-link">Users</a>
         </div>
 
         <!-- Usuario y acciones -->

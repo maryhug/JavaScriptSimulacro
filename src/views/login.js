@@ -5,8 +5,7 @@
 
 export function login(){
 
-return `
-
+    return `
 <div class="login-page">
     <div class="login-container">
         <div class="login-card">
@@ -20,12 +19,12 @@ return `
             <p class="login-subtitle">Login to your account</p>
 
             <!-- Formulario -->
-            <form class="login-form">
+            <form id="loginForm" class="login-form">
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
                     <div class="input-wrapper">
                         <span class="input-icon">👤</span>
-                        <input type="text" class="form-input" placeholder="e.g. John Doe">
+                        <input type="text" class="form-input" placeholder="e.g. John Doe" id="fullName">
                     </div>
                 </div>
 
@@ -33,7 +32,7 @@ return `
                     <label class="form-label">Email Address</label>
                     <div class="input-wrapper">
                         <span class="input-icon">✉️</span>
-                        <input type="email" class="form-input" placeholder="name@example.com">
+                        <input type="email" class="form-input" placeholder="name@example.com" id="email">
                     </div>
                 </div>
 
@@ -41,15 +40,17 @@ return `
                     <label class="form-label">Select Role</label>
                     <div class="input-wrapper">
                         <span class="input-icon">👔</span>
-                        <select class="form-select">
-                            <option value="">User</option>
+                        <select class="form-select" id="role">
+                            <option value="user">User</option>
                             <option value="admin">Admin</option>
                             <option value="chef">Chef</option>
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                <button id="btnSend" type="submit" class="btn btn-primary btn-full">
+                    Sign In
+                </button>
             </form>
 
             <!-- Footer -->
@@ -63,6 +64,5 @@ return `
         </div>
     </div>
 </div>
-
 `
 }
