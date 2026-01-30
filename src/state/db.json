@@ -1,0 +1,124 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Administrador",
+      "email": "admin@restaurapp.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Usuario Demo",
+      "email": "user@restaurapp.com",
+      "password": "user123",
+      "role": "user"
+    }
+  ],
+  "menu": [
+    {
+      "id": "1",
+      "name": "Pizza Margherita",
+      "price": 12.99,
+      "category": "Pizzas"
+    },
+    {
+      "id": "2",
+      "name": "Hamburguesa Clásica",
+      "price": 9.99,
+      "category": "Hamburguesas"
+    },
+    {
+      "id": "3",
+      "name": "Ensalada César",
+      "price": 8.5,
+      "category": "Ensaladas"
+    },
+    {
+      "id": "4",
+      "name": "Pasta Carbonara",
+      "price": 11.5,
+      "category": "Pastas"
+    },
+    {
+      "id": "5",
+      "name": "Sushi Roll",
+      "price": 15.99,
+      "category": "Sushi"
+    },
+    {
+      "id": "6",
+      "name": "Tacos al Pastor",
+      "price": 10.5,
+      "category": "Mexicana"
+    },
+    {
+      "id": "7",
+      "name": "Pizza Pepperoni",
+      "price": 13.99,
+      "category": "Pizzas"
+    },
+    {
+      "id": "8",
+      "name": "Hamburguesa BBQ",
+      "price": 11.99,
+      "category": "Hamburguesas"
+    },
+    {
+      "id": "9",
+      "name": "Sopa de Pollo",
+      "price": 6.5,
+      "category": "Sopas"
+    },
+    {
+      "id": "10",
+      "name": "Tiramisú",
+      "price": 5.99,
+      "category": "Postres"
+    }
+  ],
+  "orders": [
+    {
+      "id": "41f7",
+      "userId": "2",
+      "items": [
+        {
+          "id": 2,
+          "name": "Hamburguesa Clásica",
+          "category": "Hamburguesas",
+          "price": 9.99
+        }
+      ],
+      "total": 9.99,
+      "status": "pendiente",
+      "createdAt": "2026-01-30T18:16:40.812Z"
+    },
+    {
+      "id": "14ff",
+      "userId": "2",
+      "items": [
+        {
+          "id": 3,
+          "name": "Ensalada César",
+          "category": "Ensaladas",
+          "price": 8.5
+        },
+        {
+          "id": 8,
+          "name": "Hamburguesa BBQ",
+          "category": "Hamburguesas",
+          "price": 11.99
+        },
+        {
+          "id": 7,
+          "name": "Pizza Pepperoni",
+          "category": "Pizzas",
+          "price": 13.99
+        }
+      ],
+      "total": 34.480000000000004,
+      "status": "pendiente",
+      "createdAt": "2026-01-30T18:17:03.925Z"
+    }
+  ]
+}

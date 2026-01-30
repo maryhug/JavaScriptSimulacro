@@ -1,18 +1,20 @@
 {
   "name": "simulacrojavascript",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sistema de gestión de pedidos para restaurante",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "vite",
+    "server": "json-server --watch src/state/db.json --port 3000"
   },
   "private": true,
-  "keywords": [],
-  "author": "",
+  "keywords": ["restaurant", "orders", "spa"],
+  "author": "Maryhug Duran",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "json-server": "^1.0.0-beta.5",
     "vite": "^7.3.1"
   }
 }
