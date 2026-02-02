@@ -1,5 +1,5 @@
 // ============================================
-// VISTA DE MENÚ
+// VISTA DE MENÚ - CON CARRITO AL LADO
 // ============================================
 
 import { showLoading } from '../utils/helpers.js';
@@ -17,54 +17,87 @@ class MenuView {
         const mainContent = document.getElementById('main-content');
 
         mainContent.innerHTML = `
-            <div>
-                <h1 style="margin-bottom: 2rem;">🍽️ Menú del Restaurante</h1>
-                
-                <div class="filters-container">
-                    <div class="filter-group">
-                        <label class="form-label">Categoría</label>
-                        <select id="category-filter" class="form-select">
-                            <option value="all">Todas las categorías</option>
-                        </select>
-                    </div>
+            <h1 class="page-title">Our Menu</h1>
+            
+            <div class="search-filters-container">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Search food..."
+                        id="search-input"
+                    >
                 </div>
                 
-                <div class="menu-container" id="products-grid"></div>
-                <div id="cart-container"></div>
+                <div class="filters-container" id="category-filters">
+                    <!-- Categorías se cargarán aquí -->
+                </div>
+            </div>
+            
+            <!-- LAYOUT 2 COLUMNAS: Menú a la izquierda, Carrito a la derecha -->
+            <div class="menu-layout">
+                <div class="menu-container" id="products-grid">
+                    <!-- Productos aquí -->
+                </div>
+                
+                <div id="cart-container">
+                    <!-- Carrito aquí (NO FLOTANTE) -->
+                </div>
             </div>
         `;
 
-        // Mostrar loading
         showLoading('products-grid');
 
-        // Cargar productos desde API
         this.allProducts = await MenuService.getAllProducts();
-
-        // Cargar categorías
         this.loadCategories();
-
-        // Renderizar productos
         this.renderProducts();
-
-        // Renderizar carrito
         OrderForm.render();
 
         // Event listeners
-        document.getElementById('category-filter')
-            .addEventListener('change', (e) => this.filterByCategory(e.target.value));
+        document.getElementById('search-input')
+            .addEventListener('input', (e) => this.searchProducts(e.target.value));
 
         window.addEventListener('cartUpdated', () => OrderForm.render());
     }
 
     loadCategories() {
         const categories = MenuService.getCategories(this.allProducts);
-        const categoryFilter = document.getElementById('category-filter');
+        const filtersContainer = document.getElementById('category-filters');
 
-        categoryFilter.innerHTML = categories.map(cat => `
-            <option value="${cat}">
-                ${cat === 'all' ? 'Todas las categorías' : cat}
-            </option>
+        const categoryIcons = {
+            'all': '🍽️',
+            'Pizzas': '🍕',
+            'Hamburguesas': '🍔',
+            'Ensaladas': '🥗',
+            'Pastas': '🍝',
+            'Sushi': '🍱',
+            'Mexicana': '🌮',
+            'Sopas': '🍲',
+            'Postres': '🍰',
+            'Bebidas': '🥤'
+        };
+
+        filtersContainer.innerHTML = categories.map(cat => `
+            <button 
+                class="filter-btn ${cat === 'all' ? 'active' : ''}" 
+                data-category="${cat}"
+            >
+                ${categoryIcons[cat] || '🍴'} 
+                ${cat === 'all' ? 'All' : cat}
+            </button>
         `).join('');
+
+        // Agregar event listeners a los botones
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remover active de todos
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                // Agregar active al clickeado
+                e.target.classList.add('active');
+                // Filtrar
+                this.filterByCategory(e.target.dataset.category);
+            });
+        });
     }
 
     renderProducts() {
@@ -74,7 +107,9 @@ class MenuView {
         if (products.length === 0) {
             productsGrid.innerHTML = `
                 <div class="empty-state">
-                    <p>No hay productos disponibles</p>
+                    <div class="empty-state-icon">🍽️</div>
+                    <p class="empty-state-title">No products found</p>
+                    <p class="empty-state-text">Try another category or search</p>
                 </div>
             `;
             return;
@@ -90,6 +125,22 @@ class MenuView {
     filterByCategory(category) {
         this.currentCategory = category;
         this.renderProducts();
+    }
+
+    searchProducts(term) {
+        if (!term.trim()) {
+            this.renderProducts();
+            return;
+        }
+
+        const productsGrid = document.getElementById('products-grid');
+        const results = MenuService.searchProducts(this.allProducts, term);
+
+        productsGrid.innerHTML = results
+            .map(product => ProductCard.create(product))
+            .join('');
+
+        ProductCard.attachEventListeners();
     }
 }
 

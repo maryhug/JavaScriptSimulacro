@@ -1,5 +1,5 @@
 // ============================================
-// COMPONENTE DE TARJETA DE PRODUCTO
+// COMPONENTE DE TARJETA DE PRODUCTO - MEJORADO
 // ============================================
 
 import { STORAGE_KEYS } from '../utils/constants.js';
@@ -7,14 +7,38 @@ import { formatPrice, showNotification } from '../utils/helpers.js';
 
 class ProductCard {
     create(product) {
+        // Descripción por defecto
+        const descriptions = {
+            'Pizzas': 'Delicious pizza with fresh ingredients',
+            'Hamburguesas': 'Juicy burger with premium beef',
+            'Ensaladas': 'Fresh and healthy salad',
+            'Pastas': 'Homemade pasta with authentic sauce',
+            'Sushi': 'Fresh sushi with premium fish',
+            'Mexicana': 'Authentic Mexican flavors',
+            'Sopas': 'Warm and comforting soup',
+            'Postres': 'Sweet and delicious dessert',
+            'Bebidas': 'Refreshing beverage'
+        };
+
+        const description = descriptions[product.category] || 'Delicious food item';
+
         return `
             <div class="product-card" data-product-id="${product.id}">
-                <h3 class="product-name">${product.name}</h3>
-                <span class="product-category">${product.category}</span>
-                <p class="product-price">${formatPrice(product.price)}</p>
-                <button class="btn-add" data-product-id="${product.id}">
-                    Agregar al Pedido
-                </button>
+                <div class="product-image">
+                    <span class="product-badge">${product.category}</span>
+                </div>
+                
+                <div class="product-content">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-description">${description}</p>
+                    
+                    <div class="product-footer">
+                        <span class="product-price">${formatPrice(product.price)}</span>
+                        <button class="btn-add" data-product-id="${product.id}">
+                            Add to order
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -31,7 +55,6 @@ class ProductCard {
     }
 
     addToCart(productId) {
-        // Obtener el producto desde los datos ya cargados en la vista
         const productCard = document.querySelector(`[data-product-id="${productId}"]`);
 
         if (!productCard) return;
@@ -39,23 +62,17 @@ class ProductCard {
         const product = {
             id: productId,
             name: productCard.querySelector('.product-name').textContent,
-            category: productCard.querySelector('.product-category').textContent,
+            category: productCard.querySelector('.product-badge').textContent,
             price: parseFloat(productCard.querySelector('.product-price').textContent.replace('$', ''))
         };
 
-        // Obtener carrito actual de sessionStorage
         const cartJson = sessionStorage.getItem(STORAGE_KEYS.CART);
         const cart = cartJson ? JSON.parse(cartJson) : [];
 
-        // Agregar producto
         cart.push(product);
-
-        // Guardar carrito actualizado
         sessionStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
 
         showNotification(`${product.name} agregado al pedido`, 'success');
-
-        // Disparar evento personalizado
         window.dispatchEvent(new CustomEvent('cartUpdated'));
     }
 }

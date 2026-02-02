@@ -1,5 +1,5 @@
 // ============================================
-// COMPONENTE DE FORMULARIO DE PEDIDO (CARRITO)
+// COMPONENTE DE CARRITO - MEJORADO
 // ============================================
 
 import { STORAGE_KEYS, ROUTES } from '../utils/constants.js';
@@ -18,47 +18,65 @@ class OrderForm {
         if (cart.length === 0) {
             cartContainer.innerHTML = `
                 <div class="cart-container">
-                    <h3 class="cart-title">🛒 Mi Pedido</h3>
-                    <div class="empty-state">
-                        <p>No hay productos en el pedido</p>
+                    <div class="cart-header">
+                        <h3 class="cart-title">Your Order</h3>
+                    </div>
+                    <div class="empty-state" style="padding: 2rem 1rem;">
+                        <div class="empty-state-icon" style="font-size: 3rem;">🛒</div>
+                        <p class="empty-state-text" style="font-size: 0.9rem;">No items in your order</p>
                     </div>
                 </div>
             `;
             return;
         }
 
-        const total = calculateTotal(cart);
+        const subtotal = calculateTotal(cart);
+        const tax = subtotal * 0.08; // 8% tax
+        const total = subtotal + tax;
 
         cartContainer.innerHTML = `
             <div class="cart-container">
-                <h3 class="cart-title">🛒 Mi Pedido (${cart.length})</h3>
+                <div class="cart-header">
+                    <h3 class="cart-title">
+                        Your Order
+                        <span class="cart-badge">${cart.length}</span>
+                    </h3>
+                    <button class="btn-clear-cart" id="btn-clear-cart">Clear all</button>
+                </div>
                 
                 <div class="cart-items">
                     ${cart.map((item, index) => `
                         <div class="cart-item">
-                            <div>
-                                <strong>${item.name}</strong>
-                                <br>
-                                <small>${item.category}</small>
+                            <div class="cart-item-image"></div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-extras">Extra: ${item.category}</div>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span>${formatPrice(item.price)}</span>
-                                <button class="btn-remove" data-index="${index}">✕</button>
+                            <div class="cart-item-price-remove">
+                                <div class="cart-item-price">${formatPrice(item.price)}</div>
+                                <button class="btn-remove" data-index="${index}">Remove</button>
                             </div>
                         </div>
                     `).join('')}
                 </div>
                 
-                <div class="cart-total">
-                    Total: ${formatPrice(total)}
+                <div class="cart-summary">
+                    <div class="cart-summary-row subtotal">
+                        <span>Subtotal</span>
+                        <span>${formatPrice(subtotal)}</span>
+                    </div>
+                    <div class="cart-summary-row tax">
+                        <span>Tax (8%)</span>
+                        <span>${formatPrice(tax)}</span>
+                    </div>
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span class="cart-total-price">${formatPrice(total)}</span>
+                    </div>
                 </div>
                 
                 <button class="btn-confirm" id="btn-confirm-order">
-                    Confirmar Pedido
-                </button>
-                
-                <button class="btn-clear" id="btn-clear-cart">
-                    Vaciar Carrito
+                    Confirm Order →
                 </button>
             </div>
         `;
@@ -102,7 +120,6 @@ class OrderForm {
             return;
         }
 
-        // Crear pedido en el servidor
         const order = await OrderService.createOrder(currentUser.id, cart);
 
         if (order) {
